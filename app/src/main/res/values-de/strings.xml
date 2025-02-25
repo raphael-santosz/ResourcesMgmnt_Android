@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Meine Anwendung</string>
+    <string name="welcome">Hallo, Welt!</string>
+    <string name="action1">Hier klicken!</string>
+    <string name="toast_message">Taste gedrückt!</string>
+    <string name="change_language">Sprache ändern</string>
+</resources>
