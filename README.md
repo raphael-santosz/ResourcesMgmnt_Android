@@ -1,5 +1,12 @@
 # MiniActv-1 Best Practices in Resource Management
 
+
+## Application Preview
+<p align="left">
+  <img src="app/src/main/res/drawable/app_screenshot.png" width="250">
+</p>
+
+
 ### Default Configuration Resources
 - **Default Language:** English  
 - **Orientation:** Portrait  
