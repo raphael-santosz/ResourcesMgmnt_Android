@@ -1,9 +1,9 @@
 package com.example.myapplication
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,12 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val languages = listOf("English", "Português", "Español", "Deutsch")
+    private val languages = listOf(
+        Pair("English", R.drawable.flag_en),
+        Pair("Português", R.drawable.flag_pt),
+        Pair("Español", R.drawable.flag_es),
+        Pair("Deutsch", R.drawable.flag_de)
+    )
     private val languageCodes = listOf("en", "pt", "es", "de")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,9 +38,29 @@ class MainActivity : AppCompatActivity() {
             showToast()
         }
 
-        // Dropdown para troca de idioma
+        // Dropdown para troca de idioma com bandeiras
         val languageDropdown = findViewById<Spinner>(R.id.languageDropdown)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, languages)
+        val adapter = object : ArrayAdapter<Pair<String, Int>>(this, R.layout.item_language, languages) {
+            override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                return createLanguageItemView(position, parent)
+            }
+
+            override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                return createLanguageItemView(position, parent)
+            }
+
+            private fun createLanguageItemView(position: Int, parent: ViewGroup): View {
+                val view = layoutInflater.inflate(R.layout.item_language, parent, false)
+                val flagIcon = view.findViewById<ImageView>(R.id.flagIcon)
+                val languageText = view.findViewById<TextView>(R.id.languageText)
+
+                val (text, icon) = getItem(position)!!
+                flagIcon.setImageResource(icon)
+                languageText.text = text
+
+                return view
+            }
+        }
         languageDropdown.adapter = adapter
 
         // Define o idioma atual selecionado
@@ -78,3 +103,4 @@ class MainActivity : AppCompatActivity() {
         setLocale(language)
     }
 }
+
