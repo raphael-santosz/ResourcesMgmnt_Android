@@ -1,35 +1,39 @@
-# ResourcesMgmnt_Android
-Activity to practice resources management on android studio aplications.
+# MiniActv-1 Best Practices in Resource Management
 
-# MiniActv-1: Buenas Prácticas en la Gestión de Recursos
+### Default Configuration Resources
+- **Default Language:** English  
+- **Orientation:** Portrait  
+- **Screen Size:** Smartphone  
+- **A TextView displaying a welcome message.**  
 
-## Descripción
-Esta actividad se basa en el proyecto **MyApplication** generado por defecto en Android Studio (seleccionando **Empty Views Activity** en el asistente de **New Project**). Se deben aplicar buenas prácticas en la gestión de recursos para mejorar la internacionalización y la adaptabilidad de la interfaz de usuario.
+### Additional Alternative Resources
+- **Internationalization:** Three additional languages have been added:
+  - Portuguese  
+  - Spanish  
+  - German  
+- **Support for different screen sizes:**
+  - Proper adaptation to devices with different resolutions has been verified.  
+- **Dropdown for language selection:**
+  - A spinner (dropdown) has been implemented to allow users to change the language from the UI.  
+  - Flag icons have been added next to each language for easier visual identification.  
+  - When changing the language, the UI updates automatically without needing to restart the app.  
+- **A button (Button) that displays a Toast when pressed.**  
+  - The Toast message is also translated according to the selected language.  
+- **Adapted images and icons:**
+  - Icons representing the flags of the available languages have been added.  
+  - It was verified that background images and visual elements properly adjust to different devices.  
 
-## Requisitos
+### Resource Folder Structure  
+The files and resources are organized into the following folders within the project:  
 
-### 1. Verificación y Aplicación de la Primera Buena Práctica
-- Revisar **MainActivity.java** y los archivos de recursos para comprobar si cumplen con la primera buena práctica.
-- Si es necesario, realizar las correcciones correspondientes.
-
-### 2. Implementación de Recursos Alternativos (Segunda Buena Práctica)
-Se deben agregar recursos alternativos para mejorar la adaptabilidad de la aplicación. Algunas sugerencias incluyen:
-- **Internacionalización**: Soporte para múltiples idiomas.
-- **Adaptabilidad de interfaz**: Diseños específicos (layouts) para diferentes tamaños de pantalla.
-  - Se recomienda probar con un emulador de **tablet** para verificar el uso de un layout específico.
-  - Adaptación a distintas **orientaciones de pantalla** (portrait/landscape).
-- **Recursos gráficos adaptados**: Imágenes e íconos específicos para cada país o idioma soportado.
-
-📌 **Configuración predeterminada:**
-- Idioma: **Inglés**
-- Orientación: **Portrait** para **smartphone**
-
-Se debe verificar que los cambios esperados se reflejen correctamente al modificar estos parámetros en el dispositivo/emulador.
-(Para cambiar el idioma: **Settings > System > Languages & Input > Languages**).
-
-### 3. Implementación de un Botón con Mensaje Emergente (Toast)
-Además del `TextView` predeterminado, se debe agregar un **Button** con la etiqueta `"Action1"`, asegurando que su texto también sea internacionalizado.
-
-- Al hacer clic en el botón, debe mostrarse un **Toast** con un mensaje definido en los recursos de idioma:
-  ```java
-  Toast.makeText(getBaseContext(), getString(R.string.textoToast), Toast.LENGTH_SHORT).show();
+- **res/values/**  
+  - `strings.xml` (contains texts in English)  
+  - `values-es/strings.xml` (Spanish translations)  
+  - `values-pt/strings.xml` (Portuguese translations)  
+  - `values-de/strings.xml` (German translations)  
+- **res/drawable/**  
+  - Background images and visual elements.  
+  - Flag icons for the available languages.  
+- **res/layout/**  
+  - `activity_main.xml` (Main layout of the application).  
+  - `item_language.xml` (Structure of the spinner list item).  
