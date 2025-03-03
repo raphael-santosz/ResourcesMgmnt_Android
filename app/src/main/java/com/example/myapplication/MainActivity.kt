@@ -1,7 +1,12 @@
 package com.example.myapplication
 
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
@@ -95,6 +100,8 @@ class MainActivity : AppCompatActivity() {
             .edit()
             .putString("My_Lang", language)
             .apply()
+
+        updateAppIcon(language)
     }
 
     private fun applySavedLanguage() {
@@ -102,5 +109,58 @@ class MainActivity : AppCompatActivity() {
         val language = sharedPreferences.getString("My_Lang", "en") ?: "en"
         setLocale(language)
     }
-}
 
+    private fun updateAppIcon(language: String) {
+        val pm = packageManager
+        val packageName = packageName
+
+        val aliasMap = mapOf(
+            "en" to ".MainActivity_en",
+            "pt" to ".MainActivity_pt",
+            "es" to ".MainActivity_es",
+            "de" to ".MainActivity_de"
+        )
+
+        val newAlias = aliasMap[language] ?: ".MainActivity_en"
+        val newComponent = ComponentName(packageName, "$packageName$newAlias")
+
+        // Verifica se o alias já está ativado para evitar reinício infinito
+        val currentState = pm.getComponentEnabledSetting(newComponent)
+        if (currentState == PackageManager.COMPONENT_ENABLED_STATE_ENABLED) {
+            return // Já está ativo, então não precisa trocar!
+        }
+
+        // Ativa o novo alias
+        pm.setComponentEnabledSetting(
+            newComponent,
+            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+            PackageManager.DONT_KILL_APP
+        )
+
+        // Aguarda um tempo antes de desativar os outros aliases
+        Handler(Looper.getMainLooper()).postDelayed({
+            aliasMap.forEach { (lang, alias) ->
+                if (alias != newAlias) {
+                    val oldComponent = ComponentName(packageName, "$packageName$alias")
+                    pm.setComponentEnabledSetting(
+                        oldComponent,
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP
+                    )
+                }
+            }
+
+            // Agora podemos reabrir o app sem medo de loop infinito
+            Handler(Looper.getMainLooper()).postDelayed({
+                val intent = packageManager.getLaunchIntentForPackage(packageName)
+                intent?.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }, 1000) // Aguardamos 1 segundo antes de reabrir
+
+        }, 500) // Aguarda 500ms antes de desativar os outros aliases
+    }
+
+
+
+
+}

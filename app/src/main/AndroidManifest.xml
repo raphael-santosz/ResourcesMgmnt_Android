@@ -6,21 +6,70 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
+
+        <!-- Atividade principal (sem ícone, ícone definido pelos aliases) -->
         <activity
             android:name=".MainActivity"
             android:exported="true">
+        </activity>
+
+        <!-- Alias para cada idioma, agora com android:exported -->
+        <activity-alias
+            android:name=".MainActivity_en"
+            android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_en"
+            android:roundIcon="@mipmap/ic_launcher_en_round"
+            android:enabled="true"
+            android:exported="true">  <!-- Adicionado -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MainActivity_pt"
+            android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_pt"
+            android:roundIcon="@mipmap/ic_launcher_pt_round"
+            android:enabled="false"
+            android:exported="true">  <!-- Adicionado -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MainActivity_es"
+            android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_es"
+            android:roundIcon="@mipmap/ic_launcher_es_round"
+            android:enabled="false"
+            android:exported="true">  <!-- Adicionado -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".MainActivity_de"
+            android:targetActivity=".MainActivity"
+            android:icon="@mipmap/ic_launcher_de"
+            android:roundIcon="@mipmap/ic_launcher_de_round"
+            android:enabled="false"
+            android:exported="true">  <!-- Adicionado -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
     </application>
 
 </manifest>
