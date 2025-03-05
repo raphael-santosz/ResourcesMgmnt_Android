@@ -1,0 +1,6 @@
+# Ignorar arquivos do Gradle e Android Studio
+.gradle/
+.idea/
+*.bin
+*.lock
+*.iml
